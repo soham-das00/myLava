@@ -36,6 +36,7 @@
         }
         /* The image that shakes when they try to click no */
         #reaction-img {
+            display: none;
             width: 180px;
             height: 180px;
             object-fit: cover;
@@ -115,7 +116,7 @@
     <div id="question-container">
         <h1>Will you be my Valentine? 🌹</h1>
 
-        <img id="reaction-img" src="https://raw.githubusercontent.com/soham-das00/myLava/refs/heads/main/pleaseCatGIf.gif" alt="Cute Reaction">
+        <img id="reaction-img" src="" alt="Reaction">
         
         <div class="buttons">
             <button id="yesBtn" onclick="acceptLove()">YES! 😍</button>
@@ -136,7 +137,7 @@
         const noBtn = document.getElementById('noBtn');
         const reactionImg = document.getElementById('reaction-img');
         let dodgeCount = 0;
-
+        const pleadImage = "https://raw.githubusercontent.com/soham-das00/myLava/refs/heads/main/pleaseCatGIf.gif";
         function dodgeNo() {
             // 1. Move the button
             // We limit the movement area so it doesn't go completely off-screen easily
@@ -151,20 +152,25 @@
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
 
-            // 2. Make the main image shake head "no"
-            // We remove the class and re-add it so the animation plays every time
-            reactionImg.classList.remove('shake');
-            // Force a reflow (browser magic to make it realize we removed the class)
-            void reactionImg.offsetWidth;
-            reactionImg.classList.add('shake');
+            
 
             dodgeCount++;
             if(dodgeCount === 3) {
                  noBtn.innerText = "Babeeee please? 🥺";
+            } else if (dodgeCount === 5) {
+                reactionImg.src = pleadImage; 
+                reactionImg.style.display = "block";
+                reactionImg.classList.add('shake');
             } else if (dodgeCount === 7) {
                  noBtn.innerText = "Babeee reee please? 🥺";
                  // Make the YES button noticeably bigger
                  document.getElementById('yesBtn').style.transform = "scale(1.3)";
+            } 
+            if(dodgeCount > 5) {
+                reactionImg.classList.remove('shake');
+                // Force a reflow (browser magic to make it realize we removed the class)
+                void reactionImg.offsetWidth;
+                reactionImg.classList.add('shake');
             }
         }
 
